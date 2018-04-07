@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import TypeInfo,GoodsInfo
+from lh_goods.models import TypeInfo,GoodsInfo
 
 class TypeInfoAdmin(admin.ModelAdmin):
     list_display=['id','ttitle']

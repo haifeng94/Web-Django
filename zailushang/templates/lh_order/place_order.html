@@ -3,8 +3,26 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>在路上-提交订单</title>
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script>
+        $(function () {
+            total1=0;//商品总个数
+            total2=0;//商品总金额
+            $('.col07').each(function () {
+                count=parseInt($(this).prev().text());
+                price=parseFloat($(this).prev().prev().children('span').text());
+                total=count*price;
+                $(this).text(total.toFixed(2)+'元');
+                total1++;
+                total2+=total;
+            });
+            $('#total1').text(total1);
+            $('#total2').text(total2.toFixed(2));
+            $('#total3').text((total2+10).toFixed(2));
+            $('#total4').val((total2+10).toFixed(2));
+        });
+    </script>
 </head>
 <body>
 	<div class="header_con">
@@ -12,7 +30,7 @@
 			<div class="welcome fl">欢迎来到在路上!</div>
 			<div class="fr">
 				<div class="login_info fl">
-					欢迎您：<em>张 三</em>
+					欢迎您：<em>{{request.session.user_name}}</em>
 				</div>
 				<div class="login_btn fl">
 					<a href="login.html">登录</a>
@@ -32,7 +50,7 @@
 	</div>
 
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<a href="index.html" class="logo fl"><img src="/static/images/logo.png"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;提交订单</div>
 		<div class="search_con fr">
 			<input type="text" class="input_text fl" name="" placeholder="搜索产品">
@@ -45,9 +63,9 @@
 	<div class="common_list_con clearfix">
 		<dl>
 			<dt>寄送到：</dt>
-			<dd><input type="radio" name="" checked="">广东省 深圳市 南山区科技中二路软件园 （李四 收） 186****7868</dd>
+			<dd>{{user.uaddress}} ({{user.ushou}}收）{{user.uphone}}</dd>
 		</dl>
-		<a href="user_center_site.html" class="edit_site">编辑收货地址</a>
+		<a href="/user/site/" class="edit_site">编辑收货地址</a>
 
 	</div>
 	
@@ -75,24 +93,19 @@
 			<li class="col04">数量</li>
 			<li class="col05">小计</li>		
 		</ul>
+
+        {%for cart in carts%}
 		<ul class="goods_list_td clearfix">
-			<li class="col01">1</li>			
-			<li class="col02"><img src="images/goods/goods011.jpg"></li>
-			<li class="col03">北戴河-两天两夜游</li>
-			<li class="col04">人</li>
-			<li class="col05">2180元</li>
-			<li class="col06">1</li>
+			<li class="col01">{{forloop.counter}}</li>
+			<li class="col02"><img src="/static/{{cart.goods.gpic}}"></li>
+			<li class="col03">{{cart.goods.gtitle|slice:'10'}}...</li>
+			<li class="col04">{{cart.goods.gunit}}</li>
+			<li class="col05"><span>{{cart.goods.gprice}}</span>元</li>
+			<li class="col06">{{cart.ucount}}</li>
 			<li class="col07">2180元</li>	
 		</ul>
-		<ul class="goods_list_td clearfix">
-			<li class="col01">2</li>			
-			<li class="col02"><img src="images/goods/goods003.jpg"></li>
-			<li class="col03">雪乡-四天五夜游</li>
-			<li class="col04">人</li>
-			<li class="col05">3888元</li>
-			<li class="col06">1</li>
-			<li class="col07">3888元</li>	
-		</ul>
+		{%endfor%}
+
 	</div>
 
 	<h3 class="common_title">总金额结算</h3>

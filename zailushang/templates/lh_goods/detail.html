@@ -8,6 +8,9 @@
     <script>
         function add(){
             num=parseFloat($('.num_show').val());
+            if(num<=1){
+                return;
+            }
             $('.num_show').val(num+1);
             $('.num_show').blur();
         }
@@ -18,9 +21,13 @@
         }
         $(function () {
             $('.num_show').blur(function () {
-                num=parseFloat($('.num_show').val());
+                num=parseInt($('.num_show').val());
+                if(num<1){
+                    num=1;
+                }
                 price=parseFloat($('#gprice').text());
                 total=num*price;
+                $('.num_show').val(num);
                 $('#gtotal').text(total.toFixed(2)+'元');
             });
         });
@@ -31,14 +38,19 @@
 		<div class="header">
 			<div class="welcome fl">欢迎来到在路上!</div>
 			<div class="fr">
+                {%if request.session.user_name|default:'' != ''%}
 				<div class="login_info fl">
-					欢迎您：<em>张 三</em>
+					欢迎您：<em>{{request.session.user_name}}</em>
+                    <span>|</span>
+                    <a href="/lh_user/login.html/">退出</a>
 				</div>
+                {%else%}
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					<a href="/lh_user/login.html">登录</a>
 					<span>|</span>
 					<a href="register.html">注册</a>
 				</div>
+                {%endif%}
 				<div class="user_link fl">
 					<span>|</span>
 					<a href="user_center_info.html">用户中心</a>
@@ -175,16 +187,27 @@
 
 		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
 		$('#add_cart').click(function(){
+		    //判断是否登录，若未登录则先登录
+            if($('.login_btn').text().indexOf('登录')>=0){
+                alert('请先登录后购买');
+                location.href='/user/login';
+                return;
+            }
+            //动画
 			$(".add_jump").stop().animate({
 				'left': $to_y+7,
 				'top': $to_x+7},
 				"fast", function() {
-					$(".add_jump").fadeOut('fast',function(){
-						$('#show_count').html(2);
-					});
-
+					$(".add_jump").fadeOut('fast',function () {});
 			});
-		})
+            //异步
+            num=parseInt($('.num_show').val());
+            $.get('/cart/add{{g.id}}_'+num+'/',function (data){
+                $('#show_count').text(data.ucount);
+
+
+            });
+		});
 	</script>
 	
 </body>

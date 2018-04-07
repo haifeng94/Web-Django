@@ -40,6 +40,8 @@ INSTALLED_APPS = (
     'lh_user',
     'lh_goods',
     'tinymce',
+    'lh_cart',
+    'lh_order',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,7 +85,7 @@ DATABASES = {
         'HOST':'localhost',
         'PORT':'3306',
         'USER':'root',
-        'PASSWORD':'secret',
+        'PASSWORD':'12345678',
         'NAME':'lushang',
     }
 }

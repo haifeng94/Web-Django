@@ -11,14 +11,19 @@
 		<div class="header">
 			<div class="welcome fl">欢迎来到在路上!</div>
 			<div class="fr">
+                {%if request.session.user_name|default:'' != ''%}
 				<div class="login_info fl">
-					欢迎您：<em>张 三</em>
+					欢迎您：<em>{{request.session.user_name}}</em>
+                    <span>|</span>
+                    <a href="/user/logout/">退出</a>
 				</div>
+                {%else%}
 				<div class="login_btn fl">
-					<a href="/templates/lh_user/login.html">登录</a>
+					<a href="user/login/">登录</a>
 					<span>|</span>
-					<a href="/templates/lh_user/register.html">注册</a>
+					<a href="/user/register/">注册</a>
 				</div>
+                {%endif%}
 				<div class="user_link fl">
 					<span>|</span>
 					<a href="/templates/lh_user/user_center_info.html">用户中心</a>

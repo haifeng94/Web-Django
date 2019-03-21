@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Blog, Category, Tag, Comment, Counts
 
-# Register your models here.
 class BlogAdmin(admin.ModelAdmin):
     list_display = ['title', 'click_nums', 'category', 'create_time', 'modify_time']
 

@@ -8,7 +8,6 @@ from .forms import CommentForm
 from haystack.views import SearchView
 from blog.settings import HAYSTACK_SEARCH_RESULTS_PER_PAGE
 
-# Create your views here.
 class IndexView(View):
     '''首页'''
     def get(self, request):

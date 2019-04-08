@@ -82,9 +82,9 @@ DATABASES = {
         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_spider',
-        'USER': 'user_juejinlian',
-        'PASSWORD': 'ac21acWq18E2',
-        'HOST': '192.168.0.21',
+        'USER': 'xxx',
+        'PASSWORD': 'xxx',
+        'HOST': 'xxx',
         'PORT': '3306'
     }
 }

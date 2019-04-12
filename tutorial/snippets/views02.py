@@ -13,6 +13,7 @@ def snippet_list(request, format=None):
     """
         List all code snippets, or create a new snippet.
     """
+    
     if request.method == 'GET':
         snippets = Snippet.objects.all()
         serializer = SnippetSerializer(snippets, many=True)
@@ -30,6 +31,7 @@ def snippet_detail(request, pk, format=None):
     """
         Retrieve, update or delete a code snippet.
     """
+    
     try:
         snippet = Snippet.objects.get(pk=pk)
     except Snippet.DoesNotExist:

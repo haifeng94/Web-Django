@@ -4,7 +4,9 @@ from rest_framework.response import Response
 from .models import Snippet
 from .serializers import SnippetSerializer
 
-'''Requests and Responses'''
+'''
+Requests and Responses
+'''
 
 @api_view(['GET', 'POST'])
 def snippet_list(request, format=None):
